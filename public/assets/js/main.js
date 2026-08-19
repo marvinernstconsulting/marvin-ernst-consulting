@@ -11,7 +11,7 @@ const FORM_ENDPOINT = '/api/lead';
    gesetzt — nur hier ändern, nie im HTML.
    TODO: alle drei durch die echten Werte ersetzen. */
 const CALENDLY_URL  = 'https://calendly.com/DEIN-LINK/erstgespraech';
-const INSTAGRAM_URL = 'https://instagram.com/DEIN-HANDLE';
+const INSTAGRAM_URL = 'https://instagram.com/marvinernst03';
 const WHATSAPP_URL  = 'https://wa.me/4915168530886';
 
 /* --- Jahr im Footer ------------------------------------------------ */
