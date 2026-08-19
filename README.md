@@ -112,48 +112,56 @@ setzen und einen Consent-Banner nötig machen.
 `marvin-ernst-consulting.de` bei INWX oder netcup registrieren, dann im
 Cloudflare-Projekt unter **Domains & Routes** verbinden.
 
-### 5. E-Mail und Close verbinden
+### 5. E-Mail, Kalender und Close
 
-Reihenfolge: **Domain → Postfach → alle Konten mit `kontakt@` anlegen.**
+Reihenfolge: **Domain → Google Workspace → alle Konten mit `kontakt@` anlegen.**
 Nicht andersherum, sonst muss die Adresse später überall getauscht werden.
 
-**Postfach.** mailbox.org Business, 4 €/Nutzer/Monat mit eigener Domain,
-deutsche Server, Auftragsverarbeitungsvertrag abschließbar — den brauchst du,
-sobald Kundendaten per Mail laufen. Cloudflare Email Routing wäre kostenlos,
-kann aber nur empfangen, nicht unter `kontakt@` senden.
+**Entschieden: Google Workspace Business Standard**, 13,60 €/Nutzer/Monat bei
+jährlicher Abrechnung.
 
-**Adressen.** `kontakt@` öffentlich für die Website. `noreply@` oder
-`website@` rein technisch als Resend-Absender — braucht kein Postfach, nur
-DNS-Einträge.
+Begründung: Erst ab Business Standard lässt sich die Datenregion auf Europa
+festlegen. Als Makler verarbeitest du bei PKV und Berufsunfähigkeit
+Gesundheitsdaten — besondere Kategorien nach Art. 9 DSGVO. Business Starter
+(6,80 €) kann das nicht.
 
-**Close ↔ Postfach.** In Close *Custom Email* wählen und eintragen:
+Der zweite Grund ist betrieblich: Google Kalender arbeitet nativ mit Calendly
+und Close zusammen. mailbox.org wäre mit 4 €/Monat günstiger und hätte
+deutsche Server, bietet aber nur CalDAV — das unterstützen weder Calendly noch
+Close. Mail und Kalender lägen dann dauerhaft auseinander.
 
-| Feld | Wert |
+**Pflichtschritt, sonst Verstoß gegen Art. 28 DSGVO:** Den
+Auftragsverarbeitungsvertrag in der Admin-Konsole aktiv akzeptieren. Passiert
+nicht automatisch mit der Buchung.
+
+Danach unter *Admin-Konsole → Konto → Datenregionen* Europa auswählen.
+
+**Adressen.**
+
+| Adresse | Zweck |
 |---|---|
-| IMAP | `imap.mailbox.org` Port 993, SSL/TLS |
-| SMTP | `smtp.mailbox.org` Port 465, SSL/TLS (alternativ 587 mit STARTTLS) |
-| Benutzername | die volle E-Mail-Adresse |
-| Passwort | bei aktiver 2FA ein **App-Passwort** |
+| `kontakt@` | öffentlich, steht auf der Website |
+| `send.` (Subdomain) | technischer Absender für Resend, kein Postfach nötig |
 
-App-Passwort bei mailbox.org unter *Einstellungen → Sicherheit → Mail
-App-Passwörter*, dort IMAP und SMTP erlauben.
+**Close ↔ Gmail.** In Close das Google-Konto per OAuth verbinden — keine
+IMAP-Daten, kein App-Passwort. Danach landet jede Mail von und an einen
+Interessenten automatisch in dessen Lead-Zeitleiste. Zusammen mit dem
+Formular: die Website erzeugt den Lead, ab da hängt die Korrespondenz von
+allein daran.
 
-Danach landet jede Mail von und an einen Interessenten automatisch in dessen
-Lead-Zeitleiste. Zusammen mit dem Formular: die Website erzeugt den Lead, ab
-da hängt die weitere Korrespondenz von allein daran.
+**Close ↔ Calendly.** Native Integration. Terminlinks per Klick in Mails
+einfügbar, jede Buchung legt einen Kontakt an.
 
-**Close ↔ Calendly.** Close hat eine native Calendly-Integration. Terminlinks
-lassen sich per Klick in Mails einfügen, jede Buchung legt einen Kontakt an.
+**SPF sauber lösen.** Google und Resend wollen beide einen SPF-Eintrag, pro
+Domain darf es aber nur einen geben. Statt sie zusammenzuführen: Resend auf
+die Subdomain `send.marvin-ernst-consulting.de` legen. SPF gilt pro Domain,
+also bekommt die Subdomain ihren eigenen Eintrag und kollidiert nicht mit dem
+Google-Eintrag auf der Hauptdomain.
 
-**Offener Punkt — Kalender.** Calendly und Close synchronisieren über Google,
-Microsoft und iCloud. Ein reiner CalDAV-Kalender wie bei mailbox.org ist dort
-üblicherweise nicht dabei. Vor dem Festlegen prüfen. Wahrscheinliches
-Ergebnis: Mail bei mailbox.org, Kalender bei iCloud oder Google.
+**Kosten im Jahr.** Domain ~10 € · Workspace 163 € · Calendly 0 € ·
+Cloudflare 0 € · Resend 0 € · Close nach eigenem Tarif.
 
-**Stolperstein SPF.** mailbox.org und Resend wollen beide einen SPF-Eintrag,
-pro Domain darf es aber nur einen geben. Die beiden Einträge müssen
-zusammengeführt werden, sonst landen entweder deine Mails oder die
-Formular-Kopien im Spam.
+---
 
 ---
 
