@@ -112,6 +112,49 @@ setzen und einen Consent-Banner nötig machen.
 `marvin-ernst-consulting.de` bei INWX oder netcup registrieren, dann im
 Cloudflare-Projekt unter **Domains & Routes** verbinden.
 
+### 5. E-Mail und Close verbinden
+
+Reihenfolge: **Domain → Postfach → alle Konten mit `kontakt@` anlegen.**
+Nicht andersherum, sonst muss die Adresse später überall getauscht werden.
+
+**Postfach.** mailbox.org Business, 4 €/Nutzer/Monat mit eigener Domain,
+deutsche Server, Auftragsverarbeitungsvertrag abschließbar — den brauchst du,
+sobald Kundendaten per Mail laufen. Cloudflare Email Routing wäre kostenlos,
+kann aber nur empfangen, nicht unter `kontakt@` senden.
+
+**Adressen.** `kontakt@` öffentlich für die Website. `noreply@` oder
+`website@` rein technisch als Resend-Absender — braucht kein Postfach, nur
+DNS-Einträge.
+
+**Close ↔ Postfach.** In Close *Custom Email* wählen und eintragen:
+
+| Feld | Wert |
+|---|---|
+| IMAP | `imap.mailbox.org` Port 993, SSL/TLS |
+| SMTP | `smtp.mailbox.org` Port 465, SSL/TLS (alternativ 587 mit STARTTLS) |
+| Benutzername | die volle E-Mail-Adresse |
+| Passwort | bei aktiver 2FA ein **App-Passwort** |
+
+App-Passwort bei mailbox.org unter *Einstellungen → Sicherheit → Mail
+App-Passwörter*, dort IMAP und SMTP erlauben.
+
+Danach landet jede Mail von und an einen Interessenten automatisch in dessen
+Lead-Zeitleiste. Zusammen mit dem Formular: die Website erzeugt den Lead, ab
+da hängt die weitere Korrespondenz von allein daran.
+
+**Close ↔ Calendly.** Close hat eine native Calendly-Integration. Terminlinks
+lassen sich per Klick in Mails einfügen, jede Buchung legt einen Kontakt an.
+
+**Offener Punkt — Kalender.** Calendly und Close synchronisieren über Google,
+Microsoft und iCloud. Ein reiner CalDAV-Kalender wie bei mailbox.org ist dort
+üblicherweise nicht dabei. Vor dem Festlegen prüfen. Wahrscheinliches
+Ergebnis: Mail bei mailbox.org, Kalender bei iCloud oder Google.
+
+**Stolperstein SPF.** mailbox.org und Resend wollen beide einen SPF-Eintrag,
+pro Domain darf es aber nur einen geben. Die beiden Einträge müssen
+zusammengeführt werden, sonst landen entweder deine Mails oder die
+Formular-Kopien im Spam.
+
 ---
 
 ## Formular lokal testen
