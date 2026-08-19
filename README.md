@@ -1,67 +1,71 @@
 # Marvin Ernst Consulting — Website
 
-Statische Website, kein Build-Schritt. Einfach die Dateien deployen.
-
-**Stack:** HTML/CSS/JS · Cloudflare Pages · Pages Function → Close CRM · Calendly für Termine
+Statische Website ohne Build-Schritt, ausgeliefert über Cloudflare Workers
+Static Assets. Ein kleiner Worker nimmt zusätzlich das Anfrageformular
+entgegen und legt daraus einen Lead in Close CRM an.
 
 ---
 
 ## Lokal ansehen
 
 ```bash
-python3 -m http.server 4321
+python3 -m http.server 4321 --directory public
 ```
 
-Dann `http://localhost:4321` öffnen. Achtung: die Formular-Funktion unter `/api/lead`
-läuft so **nicht** — dafür braucht es Wrangler (siehe unten) oder ein Deployment.
+Dann `http://localhost:4321` öffnen. Das Formular unter `/api/lead` läuft so
+**nicht** — dafür braucht es Wrangler (siehe unten) oder ein Deployment.
 
 ---
 
 ## Struktur
 
 ```
-index.html               Startseite (alle Sektionen)
-impressum.html           Vorlage — Pflichtfelder ausfüllen
-datenschutz.html         Platzhalter — folgt, wenn alle Dienste feststehen
-erstinformation.html     Vorlage nach § 15 VersVermV / § 12 FinVermV
-assets/css/style.css     Komplettes Design-System (Farben, Typo, Komponenten)
-assets/js/main.js        Navigation, Reveal, FAQ, mehrstufiges Formular
-assets/fonts/            Inter + Inter Tight, lokal gehostet (kein Google-CDN)
-functions/api/lead.js    Pages Function: Formular → Close CRM + E-Mail-Kopie
-_headers                 Security-Header und Cache-Regeln
+public/                    alles, was öffentlich ausgeliefert wird
+  index.html               Startseite
+  impressum.html           Vorlage — Pflichtfelder ausfüllen
+  datenschutz.html         Platzhalter — folgt, wenn alle Dienste feststehen
+  erstinformation.html     Vorlage nach § 15 VersVermV / § 12 FinVermV
+  _headers                 Security-Header und Cache-Regeln
+  assets/css/style.css     Design-System: Farben, Typografie, Komponenten
+  assets/js/main.js        Navigation, Reveal, FAQ, mehrstufiges Formular
+  assets/fonts/            Inter + Inter Tight, lokal (kein Google-CDN)
+  assets/img/logo.svg      Logo, aus dem Original vermessen und nachgebaut
+
+src/index.js               Worker-Einstieg: Routing /api/* vs. Assets
+src/lead.js                Formular → Close CRM + E-Mail-Kopie
+wrangler.jsonc             Cloudflare-Konfiguration
 ```
+
+Alles unter `public/` ist öffentlich erreichbar. Konfiguration, Worker-Code
+und diese README liegen bewusst daneben und werden nicht ausgeliefert.
 
 ---
 
 ## Setup-Checkliste
 
-### 1. GitHub
+### 1. Cloudflare-Projekt
 
-```bash
-git remote add origin git@github.com:DEIN-USER/marvin-ernst-consulting.git
-git push -u origin main
-```
+Dashboard → **Workers & Pages** → **Create** → **Import a repository** →
+`marvinernstconsulting/marvin-ernst-consulting`
 
-### 2. Cloudflare Pages
+| Feld | Wert |
+|---|---|
+| Project name | `marvin-ernst-consulting` |
+| Build command | *leer lassen* |
+| Deploy command | `npx wrangler deploy` |
 
-1. Cloudflare Dashboard → **Workers & Pages** → **Create** → **Pages** → **Connect to Git**
-2. Repository auswählen
-3. Build-Einstellungen:
-   - Framework preset: **None**
-   - Build command: *leer lassen*
-   - Build output directory: `/`
-4. **Save and Deploy**
+Wrangler liest `wrangler.jsonc`, lädt `public/` in den Asset-Speicher und
+veröffentlicht `src/index.js` als Worker. Ab dann ist jeder Push auf `main`
+automatisch live.
 
-Ab jetzt gilt: jeder Push auf `main` ist automatisch live.
-
-### 3. Environment-Variablen (Settings → Environment variables)
+### 2. Environment-Variablen (Settings → Variables and Secrets)
 
 | Variable | Pflicht | Wofür |
 |---|---|---|
-| `CLOSE_API_KEY` | ja | Close → Settings → API Keys. Beginnt mit `api_`. **Als „Encrypted" anlegen.** |
+| `CLOSE_API_KEY` | ja | Close → Settings → API Keys. Beginnt mit `api_`. **Als Secret anlegen, nicht als Text.** |
 | `CLOSE_LEAD_STATUS_ID` | nein | Status-ID (`stat_…`), in den neue Leads laufen sollen. |
 | `RESEND_API_KEY` | empfohlen | E-Mail-Kopie über [resend.com](https://resend.com), Gratis-Tarif reicht. |
-| `LEAD_FROM_EMAIL` | mit Resend | Verifizierter Absender, z. B. `website@deine-domain.de` |
+| `LEAD_FROM_EMAIL` | mit Resend | Verifizierter Absender, z. B. `website@marvin-ernst-consulting.de` |
 | `LEAD_TO_EMAIL` | mit Resend | Dein Posteingang. |
 
 Was beim Absenden passiert:
@@ -71,52 +75,56 @@ Was beim Absenden passiert:
 3. Notiz mit allen Formularantworten an den Lead hängen
 4. Parallel E-Mail-Kopie an dich
 
-Close und E-Mail laufen unabhängig voneinander. Fällt einer aus, greift der
-andere. Fallen beide aus, bekommt der Besucher eine Fehlermeldung mit deiner
-E-Mail-Adresse — statt eines stillen Datenverlusts.
+Close und E-Mail laufen unabhängig. Fällt einer aus, greift der andere. Fallen
+beide aus, bekommt der Besucher eine Fehlermeldung mit der E-Mail-Adresse —
+statt eines stillen Datenverlusts.
 
-Die Status-ID findest du so:
+Lead-Status-IDs auslesen:
 
 ```bash
-curl https://api.close.com/api/v1/status/lead/ -u DEIN_API_KEY:
+curl https://api.close.com/api/v1/status/lead/ -u DEIN_CLOSE_API_KEY:
 ```
 
-### 4. Calendly
+### 3. Externe Links
 
-Termin-Typ „Kostenloses Erstgespräch, 30 Min" anlegen, Link kopieren und in
-`assets/js/main.js` bei `CALENDLY_URL` eintragen. Alle Buttons mit
-`data-calendly` übernehmen ihn automatisch.
+Alle drei stehen zentral oben in `public/assets/js/main.js`. Nur dort ändern,
+nie im HTML — die Buttons ziehen über `data-calendly`, `data-instagram` und
+`data-whatsapp` automatisch nach.
 
-Bewusst **verlinkt statt eingebettet**: ein Calendly-Embed würde Cookies setzen
-und einen Consent-Banner nötig machen.
+| Konstante | Status |
+|---|---|
+| `CALENDLY_URL` | Platzhalter |
+| `INSTAGRAM_URL` | Platzhalter |
+| `WHATSAPP_URL` | gesetzt |
 
-### 5. Domain
+Calendly wird bewusst **verlinkt statt eingebettet**: ein Embed würde Cookies
+setzen und einen Consent-Banner nötig machen.
 
-Domain bei Cloudflare Registrar oder INWX registrieren, dann in Pages unter
-**Custom domains** verbinden. Danach `DEINE-DOMAIN.de` ersetzen in:
+### 4. Domain
 
-- `robots.txt`
-- `sitemap.xml`
-- `index.html` (Canonical-Tag, OG-Tags, alle E-Mail-Adressen)
+`marvin-ernst-consulting.de` bei INWX oder netcup registrieren, dann im
+Cloudflare-Projekt unter **Domains & Routes** verbinden.
 
 ---
 
 ## Formular lokal testen
 
 ```bash
-npx wrangler pages dev .
+npx wrangler dev
 ```
 
-Setzt Node voraus (aktuell nicht auf dem Rechner installiert).
+Setzt Node voraus (auf diesem Rechner derzeit nicht installiert).
 
 ---
 
 ## Was noch fehlt
 
-- [ ] Echte Texte für „Über mich" (aktuell Platzhalter im HTML markiert)
-- [ ] Portrait-Foto → ersetzt `.portrait` in `index.html`
+- [ ] Instagram-Handle in `main.js`
+- [ ] Calendly-Link in `main.js`
+- [ ] Close- und Resend-Zugänge als Environment-Variablen
+- [ ] Echte Texte für „Über mich"
+- [ ] Portraitfoto statt `.portrait`-Platzhalter
 - [ ] Drei echte Kundenstimmen
-- [ ] IHK-Registernummer und Anschrift in allen Rechtsseiten
+- [ ] Google- und Trustpilot-Profil, dann Bewertungsleiste scharf schalten
+- [ ] Impressum: USt-IdNr, Berufshaftpflicht, § 34f Nr. 1/2/3
 - [ ] Datenschutzerklärung vervollständigen
-- [ ] Statistik-Zahlen in der Stats-Sektion verifizieren
-- [ ] ProvenExpert-Profil anlegen und Widget einbinden

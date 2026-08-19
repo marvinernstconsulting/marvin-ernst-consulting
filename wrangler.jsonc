@@ -1,0 +1,22 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "marvin-ernst-consulting",
+  "main": "src/index.js",
+  "compatibility_date": "2026-08-19",
+
+  // Statische Dateien liegen in public/. Alles darin wird ausgeliefert —
+  // deshalb gehören README, Konfiguration und Worker-Code bewusst daneben
+  // und nicht hinein.
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS",
+
+    // Nur /api/* geht durch den Worker. Jede andere Anfrage wird direkt
+    // aus dem Asset-Speicher beantwortet, ohne Worker-Aufruf.
+    "run_worker_first": ["/api/*"]
+  },
+
+  "observability": {
+    "enabled": true
+  }
+}

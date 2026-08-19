@@ -1,5 +1,5 @@
 /**
- * Cloudflare Pages Function — POST /api/lead
+ * Lead-Verarbeitung für POST /api/lead
  *
  * Nimmt die Anfrage aus dem mehrstufigen Formular entgegen und legt sie in
  * Close CRM an:
@@ -9,7 +9,7 @@
  *      falls die Close-API mal nicht erreichbar ist
  *
  * Environment-Variablen im Cloudflare-Dashboard setzen
- * (Workers & Pages → Projekt → Settings → Environment variables).
+ * (Workers & Pages → marvin-ernst-consulting → Settings → Variables).
  * CLOSE_API_KEY unbedingt als "Encrypted" anlegen, nicht als Plaintext:
  *
  *   CLOSE_API_KEY         Pflicht. Close → Settings → API Keys. Beginnt mit "api_".
@@ -151,7 +151,7 @@ async function sendeKopie(env, lead) {
   if (!res.ok) throw new Error(`Resend ${res.status}: ${await res.text()}`);
 }
 
-export async function onRequestPost({ request, env }) {
+export async function behandleLead(request, env) {
   let roh;
   try {
     roh = await request.json();
@@ -208,8 +208,4 @@ export async function onRequestPost({ request, env }) {
   }
 
   return json({ ok: true });
-}
-
-export async function onRequestGet() {
-  return new Response('Method Not Allowed', { status: 405, headers: { Allow: 'POST' } });
 }
