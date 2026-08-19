@@ -911,3 +911,13 @@ section { padding-block: var(--section); }
    Note wäre auf einer Gewerbeseite irreführende Werbung — sobald die Profile
    stehen, kommt hier die echte Zahl rein und die Klasse fliegt raus. */
 .rating__stars--leer { color: var(--pebble); }
+
+/* Die Sticky-Leiste ist eine Zeile, keine gestapelte Button-Gruppe. Die
+   Mobile-Regel „.btn { width: 100% }" darf hier nicht greifen, sonst
+   beanspruchen beide Buttons die volle Breite und der Termin-Button
+   bricht um. */
+@media (max-width: 560px) {
+  .sticky-cta .btn { width: auto; }
+  .sticky-cta .btn--light { flex: 1 1 auto; white-space: nowrap; }
+  .sticky-cta .btn--wa { flex: 0 0 auto; padding-inline: 22px; }
+}
