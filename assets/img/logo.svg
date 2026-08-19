@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488 350" role="img" aria-labelledby="logoTitle">
+  <title id="logoTitle">ME Consulting</title>
+  <!--
+    Rekonstruiert aus assets/img/logo-original.png (1254x1254).
+    Vermessene Geometrie, Koordinaten in Original-Pixeln:
+      Marke       488 x 273, Strichstärke 38
+      M           x 0-294, Stämme 0-38 und 257-295
+                  Diagonalen 45 Grad, weisse V-Spitze y=129, schwarze Spitze y=183
+      E           x 322-487, ohne senkrechten Stamm
+                  Balken y 0-36 / 118-155 / 236-272, mittlerer Balken kürzer (129 statt 166)
+      Schriftzug  y 320-349, exakt bündig zur Markenbreite
+
+    Farben stammen bewusst aus dem Website-Design-System, nicht aus dem
+    Original-PNG (dort: Akzent #F4741F, Marke #0C0C0C).
+  -->
+  <g fill="#000d10">
+    <path d="M0 273V0h15l132 129L280 0h15v273h-38V76L147 183 38 76v197z"/>
+    <rect x="322" y="0" width="166" height="37"/>
+    <rect x="322" y="118" width="129" height="38"/>
+    <rect x="322" y="236" width="166" height="37"/>
+  </g>
+  <text x="0" y="349" textLength="488" lengthAdjust="spacing"
+        font-family="Inter Tight, Helvetica Neue, Helvetica, Arial, sans-serif"
+        font-size="41" font-weight="500" fill="#bc7155">CONSULTING</text>
+</svg>
