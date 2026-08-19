@@ -161,7 +161,13 @@ Google-Eintrag auf der Hauptdomain.
 **Kosten im Jahr.** Domain ~10 € · Workspace 163 € · Calendly 0 € ·
 Cloudflare 0 € · Resend 0 € · Close nach eigenem Tarif.
 
----
+**Verworfene Variante.** mailbox.org (4 €) plus privates Gmail nur für den
+Kalender. Funktioniert technisch, aber für kostenlose Google-Konten gibt es
+keinen Auftragsverarbeitungsvertrag — die Termindaten der Interessenten lägen
+dann ungeschützt. Die Ersparnis kauft nichts.
+
+**Unabhängig vom Tarif:** Auch mit Calendly ist ein AVV abzuschließen,
+US-Anbieter und eigener Auftragsverarbeiter.
 
 ---
 
