@@ -2,7 +2,7 @@
 
 Statische Website, kein Build-Schritt. Einfach die Dateien deployen.
 
-**Stack:** HTML/CSS/JS · Cloudflare Pages · Cloudflare Pages Function für das Formular · Calendly für Termine
+**Stack:** HTML/CSS/JS · Cloudflare Pages · Pages Function → Close CRM · Calendly für Termine
 
 ---
 
@@ -27,7 +27,7 @@ erstinformation.html     Vorlage nach § 15 VersVermV / § 12 FinVermV
 assets/css/style.css     Komplettes Design-System (Farben, Typo, Komponenten)
 assets/js/main.js        Navigation, Reveal, FAQ, mehrstufiges Formular
 assets/fonts/            Inter + Inter Tight, lokal gehostet (kein Google-CDN)
-functions/api/lead.js    Cloudflare Pages Function: Formular → CRM + E-Mail
+functions/api/lead.js    Pages Function: Formular → Close CRM + E-Mail-Kopie
 _headers                 Security-Header und Cache-Regeln
 ```
 
@@ -58,14 +58,28 @@ Ab jetzt gilt: jeder Push auf `main` ist automatisch live.
 
 | Variable | Pflicht | Wofür |
 |---|---|---|
-| `CRM_WEBHOOK_URL` | ja | Webhook-URL deines CRM. Dorthin geht jede Anfrage. |
-| `CRM_AUTH_HEADER` | nein | Falls dein CRM einen Auth-Header braucht. |
-| `RESEND_API_KEY` | empfohlen | E-Mail-Kopie über [resend.com](https://resend.com) (Gratis-Tarif reicht). |
+| `CLOSE_API_KEY` | ja | Close → Settings → API Keys. Beginnt mit `api_`. **Als „Encrypted" anlegen.** |
+| `CLOSE_LEAD_STATUS_ID` | nein | Status-ID (`stat_…`), in den neue Leads laufen sollen. |
+| `RESEND_API_KEY` | empfohlen | E-Mail-Kopie über [resend.com](https://resend.com), Gratis-Tarif reicht. |
 | `LEAD_FROM_EMAIL` | mit Resend | Verifizierter Absender, z. B. `website@deine-domain.de` |
 | `LEAD_TO_EMAIL` | mit Resend | Dein Posteingang. |
 
-Mindestens einer der beiden Wege muss gesetzt sein — sonst antwortet das
-Formular bewusst mit einem Fehler, statt Anfragen still zu verschlucken.
+Was beim Absenden passiert:
+
+1. Bestehenden Lead per E-Mail-Adresse suchen — verhindert Doppel-Leads
+2. Falls keiner existiert: Lead mit Kontakt (Name, E-Mail, Telefon) anlegen
+3. Notiz mit allen Formularantworten an den Lead hängen
+4. Parallel E-Mail-Kopie an dich
+
+Close und E-Mail laufen unabhängig voneinander. Fällt einer aus, greift der
+andere. Fallen beide aus, bekommt der Besucher eine Fehlermeldung mit deiner
+E-Mail-Adresse — statt eines stillen Datenverlusts.
+
+Die Status-ID findest du so:
+
+```bash
+curl https://api.close.com/api/v1/status/lead/ -u DEIN_API_KEY:
+```
 
 ### 4. Calendly
 
