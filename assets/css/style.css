@@ -717,3 +717,197 @@ section { padding-block: var(--section); }
   .nav-toggle, .form-nav .btn { width: auto; }
   .form-nav .btn { flex: 1; justify-content: center; }
 }
+
+/* --- Sticky CTA-Leiste (nur Mobile) --------------------------------------
+   Der Traffic kommt von Instagram, also fast ausschließlich vom Handy.
+   Eine 13.000 px lange Seite braucht einen Termin-Button, der immer
+   erreichbar ist — sonst muss der Besucher zum Buchen zurückscrollen.
+   Blendet sich aus, sobald die Anfrage-Sektion selbst im Bild ist. */
+
+.sticky-cta {
+  display: none;
+  position: fixed;
+  inset: auto 0 0 0;
+  z-index: 90;
+  background: var(--ink);
+  padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+  gap: 10px;
+  border-top: 1px solid rgba(255,255,255,.12);
+  transform: translateY(0);
+  transition: transform .35s var(--ease), opacity .35s var(--ease);
+}
+
+.sticky-cta.is-hidden { transform: translateY(110%); opacity: 0; pointer-events: none; }
+
+.sticky-cta .btn {
+  flex: 1;
+  justify-content: center;
+  padding: 15px 20px;
+  font-size: 16px;
+}
+
+.sticky-cta .btn--wa {
+  flex: 0 0 auto;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,.32);
+  color: var(--white);
+  padding: 15px 20px;
+}
+.sticky-cta .btn--wa:hover { background: rgba(255,255,255,.08); }
+
+@media (max-width: 900px) {
+  .sticky-cta { display: flex; }
+  body { padding-bottom: 76px; }
+}
+
+/* --- Social-Links --------------------------------------------------------- */
+
+.social {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  list-style: none;
+  margin: 26px 0 0;
+  padding: 0;
+}
+
+.social a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(255,255,255,.22);
+  border-radius: 50%;
+  color: rgba(255,255,255,.72);
+  text-decoration: none;
+  transition: border-color .2s var(--ease), color .2s var(--ease);
+}
+.social a:hover { border-color: var(--white); color: var(--white); }
+.social svg { width: 19px; height: 19px; }
+
+.header-social {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  color: var(--ink);
+  opacity: .62;
+  text-decoration: none;
+  transition: opacity .2s var(--ease);
+}
+.header-social:hover { opacity: 1; }
+.header-social svg { width: 19px; height: 19px; }
+
+/* Fußzeilen-Links brauchen mehr Fläche für den Daumen */
+@media (max-width: 900px) {
+  .footer__grid ul { gap: 4px; }
+  .footer__grid ul a { display: inline-block; padding: 9px 0; }
+  .header-social { display: none; }
+}
+
+/* --- Wortmarke ------------------------------------------------------------
+   Nachbau des Logos als Inline-SVG: skaliert verlustfrei, färbt sich über
+   currentColor mit und spart einen Datei-Request. Sobald die Original-Datei
+   vorliegt, ersetzt sie den SVG-Block in Header und Footer. */
+
+.logo { display: inline-flex; align-items: center; text-decoration: none; }
+.logo svg { display: block; height: 34px; width: auto; }
+.logo--footer svg { height: 46px; }
+
+.logo .mark { fill: var(--ink); }
+.logo .word { fill: var(--clay); }
+.logo--light .mark { fill: var(--white); }
+
+/* --- Bewertungsleiste -----------------------------------------------------
+   Direkt unter der Hero, damit der Vertrauensbeweis auf den ersten Blick
+   sichtbar ist — nicht erst nach 8000 px Scrollen. */
+
+.ratings {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1px;
+  background: var(--pebble);
+  border-block: 1px solid var(--pebble);
+}
+
+.rating {
+  background: var(--white);
+  padding: 26px 30px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  text-decoration: none;
+  transition: background .25s var(--ease);
+}
+.rating:hover { background: var(--canvas); }
+
+.rating__logo {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: -0.02em;
+  flex: none;
+  width: 74px;
+}
+
+.rating__body { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+
+.rating__score {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 21px;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.rating__stars { color: var(--clay); font-size: 14px; letter-spacing: 2px; }
+.rating__meta { font-size: 13px; color: var(--ash); }
+
+.rating--placeholder { position: relative; }
+.rating--placeholder::after {
+  content: "Platzhalter";
+  position: absolute;
+  top: 10px; right: 12px;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--clay);
+  opacity: .7;
+}
+
+@media (max-width: 560px) {
+  .rating { padding: 20px 22px; gap: 14px; }
+  .rating__logo { width: 62px; font-size: 14px; }
+}
+
+/* Header-Lockup: Marke links, Firmenname daneben. Die gestapelte Fassung des
+   Logos wäre bei Header-Höhe unlesbar — „CONSULTING" käme auf rund 5 px. */
+.logo--lockup { gap: 13px; }
+
+.logo .logo__mark { height: 21px; width: auto; fill: var(--ink); flex: none; }
+
+.logo__name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 17px;
+  letter-spacing: -0.04em;
+  white-space: nowrap;
+  color: var(--ink);
+}
+.logo__name span { color: var(--clay); font-weight: 500; }
+
+@media (max-width: 420px) {
+  .logo__name { font-size: 15px; }
+  .logo--lockup { gap: 10px; }
+  .logo .logo__mark { height: 18px; }
+}
+
+/* Leere Sterne, solange keine echten Bewertungen vorliegen. Eine erfundene
+   Note wäre auf einer Gewerbeseite irreführende Werbung — sobald die Profile
+   stehen, kommt hier die echte Zahl rein und die Klasse fliegt raus. */
+.rating__stars--leer { color: var(--pebble); }

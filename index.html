@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Marvin Ernst Consulting — Unabhängige Beratung zu Absicherung, Vorsorge & Vermögensaufbau</title>
 <meta name="description" content="Unabhängiger Versicherungsmakler und Finanzanlagenvermittler. Ich analysiere deine Verträge, schließe Lücken und baue ein Konzept, das über Jahrzehnte trägt. Kostenloses Erstgespräch.">
-<link rel="canonical" href="https://www.marvin-ernst-consulting.de/">
+<link rel="canonical" href="https://marvin-ernst-consulting.de/">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Marvin Ernst Consulting — Unabhängige Finanz- und Versicherungsberatung">
 <meta property="og:description" content="Absicherung, Vorsorge und Vermögensaufbau. Unabhängig, transparent, digital.">
@@ -20,7 +20,7 @@
 <!-- ====================== HEADER ====================== -->
 <header class="site-header">
   <div class="wrap site-header__inner">
-    <a class="wordmark" href="/">Marvin Ernst <span>Consulting</span></a>
+    <a class="logo logo--lockup" href="index.html" aria-label="Marvin Ernst Consulting — Startseite"><svg class="logo__mark" viewBox="0 0 184 82" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true"><path d="M0 82V0h17l31 40L79 0h17v82H79V28L48 68 17 28v54z"/><rect x="102" y="0" width="72" height="17"/><rect x="102" y="33.5" width="52" height="17"/><rect x="102" y="65" width="72" height="17"/></svg><span class="logo__name">Marvin Ernst <span>Consulting</span></span></a>
 
     <nav class="nav" id="nav" aria-label="Hauptnavigation">
       <a href="#leistungen">Leistungen</a>
@@ -32,7 +32,10 @@
     </nav>
 
     <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="nav">Menü</button>
-    <a class="btn btn--primary btn--sm header-cta" href="#anfrage">Erstgespräch</a>
+    <div style="display:flex;align-items:center;gap:14px">
+      <a class="header-social" data-instagram href="#" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg></a>
+      <a class="btn btn--primary btn--sm header-cta" href="#anfrage">Erstgespräch</a>
+    </div>
   </div>
 </header>
 
@@ -43,20 +46,48 @@
   <div class="wrap">
     <p class="eyebrow">Versicherungsmakler &amp; Finanzanlagenvermittler</p>
 
-    <h1 class="display hero__headline">Unabhängig<br>beraten.<br><em>Klar</em> entschieden.</h1>
+    <h1 class="display hero__headline">Geld<br>verstehen.<br>Bevor es<br><em>teuer</em> wird.</h1>
 
     <div class="hero__foot">
       <div>
-        <p class="lead">Ich analysiere, was du bereits hast, zeige dir schonungslos die Lücken — und baue daraus ein Konzept für Absicherung, Vorsorge und Vermögensaufbau, das über Jahrzehnte trägt.</p>
+        <p class="lead">Zwischen erstem Gehalt und erster eigener Wohnung entscheidet sich mehr, als den meisten klar ist. Ich sortiere mit dir, was du wirklich brauchst — und was dir nur verkauft werden soll.</p>
         <div class="btn-row" style="margin-top:32px">
           <a class="btn btn--primary" href="#anfrage">Kostenloses Erstgespräch</a>
           <a class="btn btn--ghost" href="#leistungen">Leistungen ansehen</a>
         </div>
       </div>
-      <p class="hero__note">Unabhängig heißt: Ich bin an keinen Anbieter gebunden und arbeite ausschließlich in deinem Auftrag. Das Erstgespräch ist kostenlos und unverbindlich — 30 Minuten, digital oder vor Ort.</p>
+      <p class="hero__note">Ich arbeite vor allem mit 18- bis 30-Jährigen — Ausbildung, Studium, erster Job. Da werden die Weichen gestellt, und jede Entscheidung wirkt vierzig Jahre nach. Unabhängig heißt: Ich bin an keinen Anbieter gebunden und arbeite ausschließlich in deinem Auftrag.</p>
     </div>
   </div>
 </section>
+
+
+<!-- Bewertungen bewusst direkt nach der Hero: Vertrauen auf den ersten Blick.
+     TODO: Sobald echte Profile bestehen, href und Zahlen ersetzen und die
+     Klasse "rating--placeholder" entfernen. -->
+<div class="ratings">
+  <a class="rating rating--placeholder" href="#" aria-label="Google-Bewertungen ansehen">
+    <span class="rating__logo">Google</span>
+    <span class="rating__body">
+      <span class="rating__score">—<span class="rating__stars rating__stars--leer" aria-hidden="true">★★★★★</span></span>
+      <span class="rating__meta">Profil in Vorbereitung</span>
+    </span>
+  </a>
+  <a class="rating rating--placeholder" href="#" aria-label="Trustpilot-Bewertungen ansehen">
+    <span class="rating__logo">Trustpilot</span>
+    <span class="rating__body">
+      <span class="rating__score">—<span class="rating__stars rating__stars--leer" aria-hidden="true">★★★★★</span></span>
+      <span class="rating__meta">Profil in Vorbereitung</span>
+    </span>
+  </a>
+  <div class="rating">
+    <span class="rating__logo">IHK</span>
+    <span class="rating__body">
+      <span class="rating__score">Registriert</span>
+      <span class="rating__meta">Vermittlerregister D-6BSA-QGNYB-54</span>
+    </span>
+  </div>
+</div>
 
 <!-- ====================== TRUST-LEISTE ====================== -->
 <div class="trust">
@@ -64,8 +95,8 @@
     <ul class="trust__list">
       <li>Versicherungsmakler nach §&nbsp;34d GewO</li>
       <li>Finanzanlagenvermittler nach §&nbsp;34f GewO</li>
-      <li>IHK-Register D-XXXX-XXXXX-XX</li>
-      <li>Bundesweit, 100&nbsp;% digital möglich</li>
+      <li>IHK-Register D-6BSA-QGNYB-54</li>
+      <li>Berlin &amp; Stralsund — digital deutschlandweit</li>
     </ul>
   </div>
 </div>
@@ -74,14 +105,14 @@
 <section id="warum">
   <div class="wrap split reveal">
     <div>
-      <p class="eyebrow">Die Ausgangslage</p>
-      <h2>Die meisten<br>zahlen zu viel<br>für zu wenig.</h2>
+      <p class="eyebrow">Warum ich das mache</p>
+      <h2>In der Schule<br>kommt das<br>alles nicht vor.</h2>
     </div>
     <div class="split__body">
-      <p>Verträge werden abgeschlossen, wenn gerade jemand fragt — beim Ausbildungsstart, beim ersten Auto, beim Hauskauf. Ein Konzept entsteht dabei nie. Was bleibt, ist ein Stapel Policen, der teuer ist, sich überschneidet und genau da nicht greift, wo es wirklich existenziell wird.</p>
-      <p>Ich drehe die Reihenfolge um. Zuerst wird geklärt, welche Risiken dich tatsächlich ruinieren könnten und welche du selbst tragen kannst. Erst danach reden wir über Produkte — und oft über deutlich weniger, als du heute hast.</p>
-      <p>Dazu kommt der zweite Teil, den kaum jemand ernst nimmt: Vermögensaufbau. Nicht als Produktverkauf, sondern als Struktur, die zu deinem Einkommen, deinem Zeithorizont und deiner Risikotoleranz passt.</p>
-      <p><strong>Das Ergebnis ist keine längere Vertragsliste. Es ist eine kürzere — mit besserer Wirkung.</strong></p>
+      <p>Ich habe im Abitur gelernt, wie man eine Zelle zeichnet. Wie eine Krankenkasse funktioniert, welche staatlichen Förderungen mir zustehen oder was passiert, wenn ich mit 24 nicht mehr arbeiten kann — davon kam nichts vor. Im Studium auch nicht.</p>
+      <p>Das Ergebnis kennst du wahrscheinlich: Irgendwann steht jemand vor dir, der es angeblich weiß. Meistens jemand, der an dem Vertrag verdient, den er dir gerade empfiehlt. Man unterschreibt, weil man es nicht besser einschätzen kann.</p>
+      <p>Genau deshalb mache ich das. Ich erkläre dir zuerst, wie die Sachen funktionieren — Rente, Arbeitskraft, Krankenversicherung, Zulagen, Steuern. Erst wenn du verstehst, worum es geht, reden wir über Verträge. Oft über weniger, als du denkst.</p>
+      <p><strong>Am Ende sollst du selbst entscheiden können. Nicht mir vertrauen müssen.</strong></p>
     </div>
   </div>
 </section>
@@ -89,22 +120,26 @@
 <!-- ====================== ZAHLEN ====================== -->
 <section style="padding-top:0">
   <div class="wrap reveal">
+    <!-- Diese vier Aussagen sind durch dein Geschäftsmodell gedeckt, nicht behauptet.
+         Sobald du belastbare Zahlen hast (analysierte Verträge, Bewertungsschnitt,
+         betreute Mandanten), tausch einzelne Kacheln dagegen aus — Zahlen wirken
+         stärker, aber nur wenn sie stimmen. -->
     <div class="stats">
       <div class="stat">
-        <span class="stat__num" data-count="500">500+</span>
-        <span class="stat__label">analysierte Bestandsverträge</span>
-      </div>
-      <div class="stat">
-        <span class="stat__num">4,9</span>
-        <span class="stat__label">von 5 Sternen im Kundenurteil</span>
+        <span class="stat__num">0&nbsp;€</span>
+        <span class="stat__label">für Erstgespräch, Analyse und Konzept</span>
       </div>
       <div class="stat">
         <span class="stat__num">30&nbsp;Min</span>
-        <span class="stat__label">kostenloses Erstgespräch, unverbindlich</span>
+        <span class="stat__label">Erstgespräch — digital oder vor Ort</span>
       </div>
       <div class="stat">
-        <span class="stat__num">0&nbsp;€</span>
-        <span class="stat__label">Kosten für Analyse und Konzept</span>
+        <span class="stat__num">100&nbsp;%</span>
+        <span class="stat__label">unabhängig: an keinen Anbieter gebunden</span>
+      </div>
+      <div class="stat">
+        <span class="stat__num">1</span>
+        <span class="stat__label">fester Ansprechpartner statt Hotline</span>
       </div>
     </div>
   </div>
@@ -207,18 +242,18 @@
     <div>
       <p class="eyebrow">Über mich</p>
       <h2>Marvin Ernst</h2>
-      <p class="lead" style="margin:22px 0 26px">Unabhängiger Versicherungsmakler und Finanzanlagenvermittler.</p>
+      <p class="lead" style="margin:22px 0 26px">Unabhängiger Versicherungsmakler und Finanzanlagenvermittler aus Stralsund. Beratung in Berlin, Stralsund und digital deutschlandweit.</p>
 
-      <p>[PLATZHALTER — dein Werdegang: Wie bist du zur Beratung gekommen? Welcher Beruf davor? Was war der Auslöser? Zwei bis drei Absätze in deiner eigenen Sprache, gerne mit einer persönlichen Anekdote. Genau das ist bei blaulichtfinance und derfinanzsportler der stärkste Vertrauensfaktor.]</p>
+      <p>[PLATZHALTER — deine Geschichte, in deiner Sprache. Roter Faden ist da: Abitur und Studium, kein Wort über Geld, und irgendwann die Erkenntnis, dass fast niemand in deinem Umfeld weiß, was er eigentlich unterschrieben hat. Zwei, drei Absätze reichen. Konkret schlägt allgemein — nenn ruhig einen echten Moment.]</p>
 
-      <p>[PLATZHALTER — deine Haltung: Warum unabhängig? Was machst du anders als die Strukturvertriebe, bei denen die meisten ihre ersten Verträge unterschrieben haben?]</p>
+      <p>[PLATZHALTER — deine Haltung: Warum unabhängig? Was machst du anders als die Vertriebe, bei denen die meisten ihre ersten Verträge unterschrieben haben? Ein Absatz.]</p>
 
       <ul class="creds">
         <li><span>Zulassung</span><span>§ 34d Abs. 1 GewO — Versicherungsmakler</span></li>
         <li><span>Zulassung</span><span>§ 34f Abs. 1 GewO — Finanzanlagenvermittler</span></li>
-        <li><span>IHK-Registernummer</span><span>D-XXXX-XXXXX-XX</span></li>
+        <li><span>IHK-Registernummer</span><span>D-6BSA-QGNYB-54</span></li>
         <li><span>Qualifikation</span><span>[z.&nbsp;B. Fachmann/-frau für Versicherungsvermittlung IHK]</span></li>
-        <li><span>Beratung</span><span>Bundesweit — digital &amp; vor Ort</span></li>
+        <li><span>Beratung</span><span>Berlin &amp; Stralsund, digital deutschlandweit</span></li>
       </ul>
     </div>
   </div>
@@ -285,7 +320,7 @@
 
       <details>
         <summary>Läuft die Beratung digital oder vor Ort?</summary>
-        <div class="faq__answer">Beides. Die meisten Mandanten wählen Videoberatung, weil es schneller und terminlich flexibler ist. Unterlagen werden digital signiert. Vor-Ort-Termine sind [PLATZHALTER: in Region XY / nach Absprache] ebenfalls möglich.</div>
+        <div class="faq__answer">Beides. Die meisten Mandanten wählen Videoberatung, weil es schneller und terminlich flexibler ist. Unterlagen werden digital signiert. Vor-Ort-Termine biete ich in Berlin und Stralsund an, weitere Orte nach Absprache.</div>
       </details>
 
       <details>
@@ -315,7 +350,7 @@
 
       <p style="margin-top:34px;font-size:15px;color:rgba(255,255,255,.5)">
         Lieber schreiben? <a href="mailto:kontakt@marvin-ernst-consulting.de" style="color:#fff">kontakt@marvin-ernst-consulting.de</a><br>
-        Oder per WhatsApp: <a href="https://wa.me/49XXXXXXXXXXX" style="color:#fff">+49&nbsp;XXX&nbsp;XXXXXXX</a>
+        Oder per WhatsApp: <a data-whatsapp href="#" style="color:#fff">+49&nbsp;1516&nbsp;8530886</a>
       </p>
     </div>
 
@@ -416,13 +451,36 @@
 
 </main>
 
+<!-- Sticky CTA — nur Mobile, blendet sich in der Anfrage-Sektion aus -->
+<div class="sticky-cta" id="stickyCta">
+  <a class="btn btn--light" data-calendly href="#" target="_blank" rel="noopener">Termin buchen</a>
+  <a class="btn btn--wa" data-whatsapp href="#" target="_blank" rel="noopener" aria-label="WhatsApp">
+    <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2Zm0 18.15h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.22 8.22 0 0 1-1.26-4.38c0-4.54 3.7-8.23 8.25-8.23a8.23 8.23 0 0 1 0 16.47Zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.78.97-.15.16-.29.18-.53.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.470-1.38-1.72-.14-.25-.01-.38.11-.5.11-.11.25-.29.37-.44.13-.15.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.43h-.48c-.16 0-.43.06-.65.31-.22.25-.85.83-.85 2.03s.87 2.35.99 2.51c.12.16 1.71 2.61 4.15 3.66.58.25 1.03.4 1.39.51.58.19 1.11.16 1.53.1.47-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.14-1.18-.06-.11-.22-.17-.47-.29Z"/></svg>
+  </a>
+</div>
+
 <!-- ====================== FOOTER ====================== -->
 <footer class="site-footer">
   <div class="wrap">
     <div class="footer__grid">
       <div class="footer__brand">
-        <span class="wordmark">Marvin Ernst <span style="color:rgba(255,255,255,.45)">Consulting</span></span>
+        <a class="logo logo--light logo--footer" href="index.html" aria-label="Marvin Ernst Consulting — Startseite">
+      <svg viewBox="0 0 250 104" xmlns="http://www.w3.org/2000/svg" role="img">
+        <title>ME Consulting</title>
+        <g class="mark">
+          <path d="M10 92V10h17l31 40 31-40h17v82H89V38L58 78 27 38v54z"/>
+          <rect x="112" y="10" width="72" height="17"/>
+          <rect x="112" y="43.5" width="52" height="17"/>
+          <rect x="112" y="75" width="72" height="17"/>
+        </g>
+        <text class="word" x="10" y="102" font-family="Inter Tight, Helvetica, Arial, sans-serif"
+              font-size="15" font-weight="500" letter-spacing="5.6">CONSULTING</text>
+      </svg>
+    </a>
         <p>Unabhängige Beratung zu Absicherung, Vorsorge und Vermögensaufbau. Versicherungsmakler nach §&nbsp;34d GewO und Finanzanlagenvermittler nach §&nbsp;34f GewO.</p>
+        <ul class="social">
+          <li><a data-instagram href="#" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg></a></li>
+        </ul>
       </div>
 
       <div>
@@ -459,7 +517,7 @@
 
     <div class="footer__legal">
       <span>© <span id="year">2026</span> Marvin Ernst Consulting</span>
-      <span>IHK-Register D-XXXX-XXXXX-XX · Vermittlerregister: <a href="https://www.vermittlerregister.info" target="_blank" rel="noopener" style="color:rgba(255,255,255,.55)">vermittlerregister.info</a></span>
+      <span>IHK-Register D-6BSA-QGNYB-54 · Vermittlerregister: <a href="https://www.vermittlerregister.info" target="_blank" rel="noopener" style="color:rgba(255,255,255,.55)">vermittlerregister.info</a></span>
     </div>
   </div>
 </footer>

@@ -4,4 +4,4 @@ Disallow: /impressum.html
 Disallow: /datenschutz.html
 Disallow: /erstinformation.html
 
-Sitemap: https://DEINE-DOMAIN.de/sitemap.xml
+Sitemap: https://marvin-ernst-consulting.de/sitemap.xml

@@ -7,17 +7,39 @@
    es an CRM-Webhook und/oder E-Mail weiter. Siehe functions/api/lead.js */
 const FORM_ENDPOINT = '/api/lead';
 
-/* Calendly-Terminlink. Wird auf jedes Element mit data-calendry gesetzt.
-   TODO: durch deinen echten Link ersetzen. */
-const CALENDLY_URL = 'https://calendly.com/DEIN-LINK/erstgespraech';
+/* Externe Links. Werden auf alle Elemente mit dem jeweiligen data-Attribut
+   gesetzt — nur hier ändern, nie im HTML.
+   TODO: alle drei durch die echten Werte ersetzen. */
+const CALENDLY_URL  = 'https://calendly.com/DEIN-LINK/erstgespraech';
+const INSTAGRAM_URL = 'https://instagram.com/DEIN-HANDLE';
+const WHATSAPP_URL  = 'https://wa.me/4915168530886';
 
 /* --- Jahr im Footer ------------------------------------------------ */
 document.getElementById('year').textContent = new Date().getFullYear();
 
-/* --- Calendly-Links zentral setzen ---------------------------------- */
-document.querySelectorAll('[data-calendly]').forEach((el) => {
-  el.href = CALENDLY_URL;
+/* --- Externe Links zentral setzen ----------------------------------- */
+const LINKS = {
+  '[data-calendly]': CALENDLY_URL,
+  '[data-instagram]': INSTAGRAM_URL,
+  '[data-whatsapp]': WHATSAPP_URL
+};
+
+Object.entries(LINKS).forEach(([selektor, url]) => {
+  document.querySelectorAll(selektor).forEach((el) => {
+    el.href = url;
+  });
 });
+
+/* --- Sticky CTA ausblenden, wenn die Anfrage-Sektion im Bild ist ----- */
+const stickyCta = document.getElementById('stickyCta');
+const anfrage = document.getElementById('anfrage');
+
+if (stickyCta && anfrage && 'IntersectionObserver' in window) {
+  new IntersectionObserver(
+    ([eintrag]) => stickyCta.classList.toggle('is-hidden', eintrag.isIntersecting),
+    { threshold: 0.18 }
+  ).observe(anfrage);
+}
 
 /* --- Mobile Navigation --------------------------------------------- */
 const navToggle = document.getElementById('navToggle');
