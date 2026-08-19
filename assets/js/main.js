@@ -1,0 +1,167 @@
+/* Marvin Ernst Consulting — Interaktion
+   ------------------------------------------------------------------
+   TODO vor dem Livegang: FORM_ENDPOINT auf den echten Empfänger setzen.
+   Empfehlung ohne eigenes Backend: Formspree (https://formspree.io/f/XXXX)
+   oder Netlify Forms. Bei Netlify stattdessen data-netlify="true" am
+   <form>-Tag setzen und diesen Fetch-Block entfernen.
+   ------------------------------------------------------------------ */
+
+const FORM_ENDPOINT = ''; // z. B. 'https://formspree.io/f/xxxxxxxx'
+
+/* --- Jahr im Footer ------------------------------------------------ */
+document.getElementById('year').textContent = new Date().getFullYear();
+
+/* --- Mobile Navigation --------------------------------------------- */
+const navToggle = document.getElementById('navToggle');
+const nav = document.getElementById('nav');
+
+navToggle.addEventListener('click', () => {
+  const open = nav.classList.toggle('is-open');
+  navToggle.setAttribute('aria-expanded', String(open));
+  navToggle.textContent = open ? 'Schließen' : 'Menü';
+});
+
+nav.addEventListener('click', (e) => {
+  if (e.target.tagName === 'A') {
+    nav.classList.remove('is-open');
+    navToggle.setAttribute('aria-expanded', 'false');
+    navToggle.textContent = 'Menü';
+  }
+});
+
+/* --- Reveal beim Scrollen ------------------------------------------ */
+const reveals = document.querySelectorAll('.reveal');
+
+if ('IntersectionObserver' in window) {
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-in');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+
+  reveals.forEach((el) => io.observe(el));
+} else {
+  reveals.forEach((el) => el.classList.add('is-in'));
+}
+
+/* --- FAQ: immer nur eine Antwort offen ------------------------------ */
+const faqItems = document.querySelectorAll('.faq details');
+faqItems.forEach((item) => {
+  item.addEventListener('toggle', () => {
+    if (!item.open) return;
+    faqItems.forEach((other) => { if (other !== item) other.open = false; });
+  });
+});
+
+/* --- Mehrstufiges Formular ------------------------------------------ */
+const form = document.getElementById('leadForm');
+const steps = [...document.querySelectorAll('.form-step')];
+const bars = [...document.querySelectorAll('.form-progress span')];
+const errorBox = document.getElementById('formError');
+const success = document.getElementById('formSuccess');
+let current = 0;
+
+function showStep(index) {
+  current = Math.max(0, Math.min(index, steps.length - 1));
+  steps.forEach((step, i) => step.classList.toggle('is-active', i === current));
+  bars.forEach((bar, i) => bar.classList.toggle('is-active', i <= current));
+  errorBox.style.display = 'none';
+}
+
+function validateStep(index) {
+  if (index === 0) {
+    const picked = form.querySelectorAll('input[name="thema"]:checked').length;
+    return picked > 0 ? null : 'Bitte wähle mindestens ein Thema aus.';
+  }
+  if (index === 1) {
+    return form.querySelector('input[name="status"]:checked')
+      ? null
+      : 'Bitte wähle aus, was auf dich zutrifft.';
+  }
+  return null;
+}
+
+function fail(message) {
+  errorBox.textContent = message;
+  errorBox.style.display = 'block';
+}
+
+form.addEventListener('click', (e) => {
+  const next = e.target.closest('[data-next]');
+  const prev = e.target.closest('[data-prev]');
+
+  if (next) {
+    const problem = validateStep(current);
+    if (problem) {
+      // Fehler im aktuellen Schritt anzeigen
+      let inline = steps[current].querySelector('.step-error');
+      if (!inline) {
+        inline = document.createElement('p');
+        inline.className = 'step-error';
+        inline.style.cssText = 'color:#c0392b;font-size:14px;margin:0 0 14px';
+        steps[current].querySelector('.form-nav').before(inline);
+      }
+      inline.textContent = problem;
+      return;
+    }
+    const stale = steps[current].querySelector('.step-error');
+    if (stale) stale.remove();
+    showStep(current + 1);
+  }
+
+  if (prev) showStep(current - 1);
+});
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  errorBox.style.display = 'none';
+
+  const name = form.name.value.trim();
+  const email = form.email.value.trim();
+  const consent = form.datenschutz.checked;
+
+  if (!name) return fail('Bitte gib deinen Namen an.');
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return fail('Bitte gib eine gültige E-Mail-Adresse an.');
+  if (!consent) return fail('Bitte stimme der Datenschutzerklärung zu.');
+
+  const data = {
+    themen: [...form.querySelectorAll('input[name="thema"]:checked')].map((i) => i.value).join(', '),
+    status: form.querySelector('input[name="status"]:checked')?.value || '',
+    name,
+    email,
+    telefon: form.telefon.value.trim(),
+    nachricht: form.nachricht.value.trim()
+  };
+
+  const submitBtn = form.querySelector('button[type="submit"]');
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Wird gesendet …';
+
+  try {
+    if (!FORM_ENDPOINT) {
+      // Kein Endpoint konfiguriert: Fallback auf E-Mail-Client,
+      // damit die Seite auch vor dem Backend-Setup nutzbar ist.
+      const body = Object.entries(data).map(([k, v]) => `${k}: ${v}`).join('\n');
+      window.location.href =
+        `mailto:kontakt@marvin-ernst-consulting.de?subject=${encodeURIComponent('Anfrage über die Website')}&body=${encodeURIComponent(body)}`;
+    } else {
+      const res = await fetch(FORM_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(data)
+      });
+      if (!res.ok) throw new Error('Request failed');
+    }
+
+    form.style.display = 'none';
+    document.querySelector('.form-progress').style.display = 'none';
+    success.classList.add('is-active');
+  } catch (err) {
+    fail('Das hat leider nicht geklappt. Schreib mir bitte direkt an kontakt@marvin-ernst-consulting.de.');
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Anfrage senden';
+  }
+});
