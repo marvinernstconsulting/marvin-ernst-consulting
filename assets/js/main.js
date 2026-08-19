@@ -1,15 +1,23 @@
 /* Marvin Ernst Consulting — Interaktion
    ------------------------------------------------------------------
-   TODO vor dem Livegang: FORM_ENDPOINT auf den echten Empfänger setzen.
-   Empfehlung ohne eigenes Backend: Formspree (https://formspree.io/f/XXXX)
-   oder Netlify Forms. Bei Netlify stattdessen data-netlify="true" am
-   <form>-Tag setzen und diesen Fetch-Block entfernen.
+   Zentrale Konfiguration. Nur hier anpassen, nicht im HTML.
    ------------------------------------------------------------------ */
 
-const FORM_ENDPOINT = ''; // z. B. 'https://formspree.io/f/xxxxxxxx'
+/* Cloudflare Pages Function — nimmt das Formular entgegen und leitet
+   es an CRM-Webhook und/oder E-Mail weiter. Siehe functions/api/lead.js */
+const FORM_ENDPOINT = '/api/lead';
+
+/* Calendly-Terminlink. Wird auf jedes Element mit data-calendry gesetzt.
+   TODO: durch deinen echten Link ersetzen. */
+const CALENDLY_URL = 'https://calendly.com/DEIN-LINK/erstgespraech';
 
 /* --- Jahr im Footer ------------------------------------------------ */
 document.getElementById('year').textContent = new Date().getFullYear();
+
+/* --- Calendly-Links zentral setzen ---------------------------------- */
+document.querySelectorAll('[data-calendly]').forEach((el) => {
+  el.href = CALENDLY_URL;
+});
 
 /* --- Mobile Navigation --------------------------------------------- */
 const navToggle = document.getElementById('navToggle');
@@ -133,7 +141,8 @@ form.addEventListener('submit', async (e) => {
     name,
     email,
     telefon: form.telefon.value.trim(),
-    nachricht: form.nachricht.value.trim()
+    nachricht: form.nachricht.value.trim(),
+    website: form.website.value // Honeypot — muss leer bleiben
   };
 
   const submitBtn = form.querySelector('button[type="submit"]');
@@ -141,20 +150,12 @@ form.addEventListener('submit', async (e) => {
   submitBtn.textContent = 'Wird gesendet …';
 
   try {
-    if (!FORM_ENDPOINT) {
-      // Kein Endpoint konfiguriert: Fallback auf E-Mail-Client,
-      // damit die Seite auch vor dem Backend-Setup nutzbar ist.
-      const body = Object.entries(data).map(([k, v]) => `${k}: ${v}`).join('\n');
-      window.location.href =
-        `mailto:kontakt@marvin-ernst-consulting.de?subject=${encodeURIComponent('Anfrage über die Website')}&body=${encodeURIComponent(body)}`;
-    } else {
-      const res = await fetch(FORM_ENDPOINT, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify(data)
-      });
-      if (!res.ok) throw new Error('Request failed');
-    }
+    const res = await fetch(FORM_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify(data)
+    });
+    if (!res.ok) throw new Error('Request failed');
 
     form.style.display = 'none';
     document.querySelector('.form-progress').style.display = 'none';

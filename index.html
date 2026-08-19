@@ -310,8 +310,7 @@
       <p class="lead" style="margin-top:26px">Unverbindlich, kostenlos und ohne Produktpräsentation. Am Ende weißt du, wo du stehst — und ob du mit mir weitermachen willst.</p>
 
       <div class="btn-row" style="margin-top:34px">
-        <!-- TODO: Calendly-/Cal.com-Link eintragen -->
-        <a class="btn btn--light" href="https://calendly.com/DEIN-LINK" target="_blank" rel="noopener">Termin direkt buchen</a>
+        <a class="btn btn--light" data-calendly href="#" target="_blank" rel="noopener">Termin direkt buchen</a>
       </div>
 
       <p style="margin-top:34px;font-size:15px;color:rgba(255,255,255,.5)">
@@ -386,6 +385,12 @@
           <div class="field">
             <label for="f-msg">Nachricht (optional)</label>
             <textarea id="f-msg" name="nachricht"></textarea>
+          </div>
+
+          <!-- Honeypot gegen Spam-Bots: für Menschen unsichtbar, muss leer bleiben -->
+          <div aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden">
+            <label for="f-web">Website</label>
+            <input type="text" id="f-web" name="website" tabindex="-1" autocomplete="off">
           </div>
 
           <label class="consent">

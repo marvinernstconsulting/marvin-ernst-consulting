@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /impressum.html
+Disallow: /datenschutz.html
+Disallow: /erstinformation.html
+
+Sitemap: https://DEINE-DOMAIN.de/sitemap.xml
