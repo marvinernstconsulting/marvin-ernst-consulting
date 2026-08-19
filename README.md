@@ -9,11 +9,17 @@ entgegen und legt daraus einen Lead in Close CRM an.
 ## Lokal ansehen
 
 ```bash
-python3 -m http.server 4321 --directory public
+python3 serve.py
 ```
 
-Dann `http://localhost:4321` öffnen. Das Formular unter `/api/lead` läuft so
-**nicht** — dafür braucht es Wrangler (siehe unten) oder ein Deployment.
+Dann `http://localhost:4321` öffnen.
+
+`serve.py` statt `http.server`, weil die internen Links ohne `.html`-Endung
+geschrieben sind — so wie Cloudflare sie ausliefert. Der Skript-Server löst
+`/impressum` genauso auf wie die Produktion.
+
+Das Formular unter `/api/lead` läuft lokal **nicht** — dafür braucht es
+Wrangler (siehe unten) oder ein Deployment.
 
 ---
 
@@ -31,6 +37,7 @@ public/                    alles, was öffentlich ausgeliefert wird
   assets/fonts/            Inter + Inter Tight, lokal (kein Google-CDN)
   assets/img/logo.svg      Logo, aus dem Original vermessen und nachgebaut
 
+serve.py                   lokaler Vorschau-Server, ahmt Cloudflare nach
 src/index.js               Worker-Einstieg: Routing /api/* vs. Assets
 src/lead.js                Formular → Close CRM + E-Mail-Kopie
 wrangler.jsonc             Cloudflare-Konfiguration

@@ -1,7 +1,7 @@
 User-agent: *
 Allow: /
-Disallow: /impressum.html
-Disallow: /datenschutz.html
-Disallow: /erstinformation.html
+Disallow: /impressum
+Disallow: /datenschutz
+Disallow: /erstinformation
 
 Sitemap: https://marvin-ernst-consulting.de/sitemap.xml
